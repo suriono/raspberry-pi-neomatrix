@@ -5,8 +5,10 @@
 
 #define PIN_NORTH_SIGN  2
 #define PIN_SOUTH_SIGN  8
-#define TILE_COLUMNS    6
-#define TILE_ROWS       5
+#define TILE_COLUMNS    6  
+// 6
+#define TILE_ROWS       5  
+// 5
 #define NEO_RED         9109504
 
  // Use Arduino Due because SRAM is high, 96KB, Mega is 8KB
@@ -25,6 +27,10 @@ JSONVar jsonObject;
 void setup() {
   Serial.begin(57600);
   SerialUSB.begin(115200);
+
+  Neopixel_Initial();
+
+  /*
   matrix.begin();
   matrix2.begin();
   matrix.setTextWrap(false); 
@@ -34,8 +40,9 @@ void setup() {
   //matrix.setTextSize(1);
   //matrix.fillScreen(0); 
   matrix.setTextColor(matrix.Color(0, 0, 10));
-  matrix.print(F(" U"));
+  matrix.print(F(" UZ"));
   matrix.show();
+  */
 }
 
 int x = 0;

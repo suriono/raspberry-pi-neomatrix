@@ -7,4 +7,16 @@ git add *:
 ================================
 git commit -m "message changes"
 ================================
-
+git remote -v:
+	github location
+================================
+git config --list:
+	git configurations
+================================
+git remote add origin https://github.com/suriono/raspberry-pi-neomatrix.git
+	Set git remote repository, get the <branch> from git status
+===============================
+git push origin <branch>
+	Send to GitHub, get the <branch>,"main" in this case, from git status
+	password from https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token
+        or go to https://github.com/settings/tokens/
