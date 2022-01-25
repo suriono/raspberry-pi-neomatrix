@@ -27,14 +27,14 @@ void Neopixel_Initial() {
 
 // ==================== Set Text =========================
 
-void Neopixel_SetText(byte channel, byte textsize, uint32_t color, String text, int x, int y) {
-  if (channel & 1) {
+void Neopixel_SetText(byte thischannel, byte textsize, uint32_t color, String text, int x, int y) {
+  if (thischannel & 1) {
     matrix1.setTextSize(textsize);
     matrix1.setTextColor(color);
     matrix1.setCursor(x,y);
     matrix1.print(text);
   }
-  if (channel & 2) {
+  if (thischannel & 2) {
     matrix2.setTextSize(textsize);
     matrix2.setTextColor(color);
     matrix2.setCursor(x,y);

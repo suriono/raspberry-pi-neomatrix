@@ -37,6 +37,7 @@ int x = 0;
 int nbright = 1;
 int color_cycle = 0;
 int bright_inc = 10;
+byte channel = 0;
 
 // ==================== LOOP =======================
 

@@ -100,26 +100,11 @@ def mainhome():
    print(mySerial.findPort())
    return render_template('simple-sender.html')
 
-# ===================== Set Cursor, not used ==========
-
-@app.route('/Set_Cursor', methods=['POST'])
-def setcursor():
-   data = {}
-   data["cmd"] = "SetCursor"
-   data["X"]   = request.form['cursorx']
-   data["Y"]   = request.form['cursory']
-   
-   json_obj = json.dumps(data)
-   mySerial.serOpen()
-   mySerial.serWrite( json_obj )
-   mySerial.serClose() 
-   return json.dumps({'Command Received':'Set_Cursor'})
-
 # ===================== Set Text =====================
 
 @app.route('/Set_Text', methods=['POST'])
 def settext():
-   data = {}
+   data = getSignNumber()
    data["cmd"]   = "SetText"
    data["X"]     = request.form['cursorx']
    data["Y"]     = request.form['cursory']
@@ -142,8 +127,15 @@ def settext():
 def Delete_All():
    dimTimer.stop() 
 
+   print("Delete All ..... ")
+   data = getSignNumber()
+
+   data["cmd"]   = "DeleteAll"
+   json_obj     = json.dumps(data)
+
    mySerial.serOpen()
-   mySerial.serWrite('{"cmd":"DeleteAll"}');
+   # mySerial.serWrite('{"cmd":"DeleteAll"}');
+   mySerial.serWrite( json_obj )
    mySerial.serClose()
    return json.dumps({'Command Received':'Delete_All'})
 
@@ -186,6 +178,23 @@ def openSavedFile():
       print("Cannot open lastPixels.json file") 
       return False
 
+# ===================== Get Sign number ========================
+
+def getSignNumber():
+   data = {}
+   try:
+      sign1 = request.form['sign_1']
+      channel = 1
+   except:
+      channel = 0
+   try:
+      Sign2 = request.form['sign_2']
+      channel = channel + 2
+   except:
+      pass
+   data["Channel"] = str(channel)
+   return data
+
 # ====================== Load Saved Pixels ============================
 
 @app.route('/Load_SavePixels', methods=['POST'])
@@ -193,7 +202,7 @@ def loadpixel():
    if openSavedFile():
       global DataJson
       dimTimer.stop() 
-      data = {}
+      data = getSignNumber()
       data["Pixels"] = str(DataJson["Pixels"]) 
 
       data["cmd"]   = "SetPixels"
@@ -228,7 +237,7 @@ def set_Brightness(bright):
 
          count = count + 1
       
-      data = {}
+      data = getSignNumber()
       data["Pixels"] = str(newp)
       data["cmd"]   = "SetPixels"
       json_obj     = json.dumps(data)
@@ -240,14 +249,15 @@ def set_Brightness(bright):
 
 @app.route('/Undo', methods=['POST'])
 def undo():
-   data = {}
+   data = getSignNumber()
    data["cmd"]   = "SetText"
    data["X"]     = request.form['cursorx']
    data["Y"]     = request.form['cursory']
-   data["Red"]   = 0
-   data["Green"] = 0
-   data["Blue"]  = 0
+   data["Red"]   = "0"
+   data["Green"] = "0"
+   data["Blue"]  = "0"
    data["Text"]  = request.form['sign_text']
+   data["Size"]  = request.form['textsize']
 
    json_obj     = json.dumps(data)
    print(json_obj)
@@ -271,7 +281,7 @@ def nightbrightness():
 
 @app.route('/Set_Pixels', methods=['POST'])
 def setpixel():
-   data = {}
+   data = getSignNumber()
    data["cmd"]    = "SetPixels"
    data["Pixels"] = request.form['pixels']
 
@@ -347,7 +357,7 @@ class TimerDim():
             time.sleep(self.interval)
          else:
             print("== Not checking Sun Time ==== Elapsed: %f" %(elapsed))
-            time.sleep(10)
+            time.sleep(600)
       print("========Exiting Sun Time Thread ====")
 
    def stop(self):

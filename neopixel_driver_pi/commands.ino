@@ -8,16 +8,16 @@ void Command_Run() {
   } else if (Cmd.equals("TestConnection")) {
      Serial.print("test connection OK");
      SerialUSB.println("OK");
-  } else if (Cmd.equals("SetCursor")) {
-     Set_Cursor(1);
+  //} else if (Cmd.equals("SetCursor")) {
+  //   Set_Cursor(1);
   } else if (Cmd.equals("SetText")) {
-     Set_Text(1);
+     Set_Text();
   } else if (Cmd.equals("Test_NightBrightness")) {
-     Test_Dimmer(1, 70);
+     Test_Dimmer(70);
   } else if (Cmd.equals("SetPixels")) {
-     Set_Pixels(1);
+     Set_Pixels();
   } else if (Cmd.equals("SavePixel")) {
-     Get_Pixels(1);
+     Get_Pixels();
   }
 }
 
@@ -30,7 +30,7 @@ void Delete_All() {
 }
 
 // ============== Test Dimmer ===============
-void Test_Dimmer(byte channel, int bright) {
+void Test_Dimmer(int bright) {
   uint32_t pixcol[256*TILE_COLUMNS*TILE_COLUMNS], pixcolor,pixnight;
   uint32_t r, g, b;
   for (int nn=0; nn < 256*TILE_COLUMNS*TILE_COLUMNS ; nn++) {
@@ -54,7 +54,7 @@ void Test_Dimmer(byte channel, int bright) {
 }
 
 // ============== Set Cursor ===============
-void Set_Cursor(byte channel) { 
+void Set_Cursor() { 
   int x = Json_parse_int("X");
   int y = Json_parse_int("Y");
   if (channel & 1) {
@@ -66,7 +66,7 @@ void Set_Cursor(byte channel) {
 }
 
 // ============== Set Colors ===============
-void Set_TextColor(byte channel) { 
+void Set_TextColor() { 
   int r = Json_parse_int("Red");
   int g = Json_parse_int("Green");
   int b = Json_parse_int("Blue");
@@ -79,9 +79,10 @@ void Set_TextColor(byte channel) {
 }
 
 // ============== Set Text ===============
-void Set_Text(byte channel) {
-  Set_Cursor(channel);
-  Set_TextColor(channel);
+void Set_Text() {
+  channel = Json_parse_int("Channel");
+  Set_Cursor();
+  Set_TextColor();
   if (channel & 1) {
      matrix1.setTextSize(Json_parse_int("Size"));
      matrix1.print(Json_parse_str("Text"));
@@ -95,7 +96,8 @@ void Set_Text(byte channel) {
 }
 
 // ============== Set Pixels ===============
-void Set_Pixels(byte channel) {
+void Set_Pixels() {
+  channel = Json_parse_int("Channel");
   JSONVar pp = JSON.parse(jsonObject["Pixels"]); // pair of pixel# & color
   Serial.println(pp);
   for (int nn=0; nn < pp.length()/2 ; nn++) {
@@ -112,7 +114,7 @@ void Set_Pixels(byte channel) {
 }
 
 // ============== Get Pixels ===============
-void Get_Pixels(byte channel) {
+void Get_Pixels() {
   uint32_t pixcolor;
   for (int nn=0; nn < 256*TILE_COLUMNS*TILE_COLUMNS ; nn++) {
     pixcolor = matrix1.getPixelColor(nn);
