@@ -11,9 +11,10 @@
     // ================================================================
 
    function Delete_All() {
+      var urladd = 'http://' + document.getElementById("ipserver").value ;
 		
       $.ajax({
-         url: 'http://192.168.0.186:5000/Delete_All',
+         url: urladd + '/Delete_All',
          type: 'POST'
       });		
    }
@@ -21,8 +22,9 @@
    // ================================================================
 
    function Set_Cursor() {
+      var urladd = 'http://' + document.getElementById("ipserver").value ;
       $.ajax({
-         url: 'http://192.168.0.186:5000/Set_Cursor',
+         url: urladd + '/Set_Cursor',
 	 type: 'POST',
          data: $('form').serialize(),
          success: function(response){ console.log(response);
@@ -37,8 +39,9 @@
    // ================================================================
 
    function Set_Text() {
+      var urladd = 'http://' + document.getElementById("ipserver").value ;
       $.ajax({
-         url: 'http://192.168.0.186:5000/Set_Text',
+         url: urladd + '/Set_Text',
          type: 'POST',
          data: $('form').serialize()
       });
@@ -48,8 +51,9 @@
    // ================================================================
 
    function Set_Brightness() {
+      var urladd = 'http://' + document.getElementById("ipserver").value ;
       $.ajax({
-         url: 'http://192.168.0.186:5000/Set_Brightness',
+         url: urladd + '/Set_Brightness',
          type: 'POST',
          data: $('form').serialize()
       });
@@ -58,8 +62,9 @@
    // ================================================================
 
    function Undo() {
+      var urladd = 'http://' + document.getElementById("ipserver").value ;
       $.ajax({
-         url: 'http://192.168.0.186:5000/Undo',
+         url: urladd + '/Undo',
          type: 'POST',
          data: $('form').serialize()
       });
@@ -74,8 +79,9 @@
    // ================================================================
 
    function Pixels() {
+      var urladd = 'http://' + document.getElementById("ipserver").value ;
       $.ajax({
-         url: 'http://192.168.0.186:5000/Set_Pixels',
+         url: urladd + '/Set_Pixels',
          type: 'POST',
          data: $('form').serialize()
       });
@@ -84,8 +90,9 @@
    // ================================================================
 
    function SavePixels() {
+      var urladd = 'http://' + document.getElementById("ipserver").value ;
       $.ajax({
-         url: 'http://192.168.0.186:5000/SavePixels',
+         url: urladd + '/SavePixels',
          type: 'POST'
       });
    }
@@ -93,8 +100,9 @@
    // ================================================================
 
    function Load_SavePixels() {
+      var urladd = 'http://' + document.getElementById("ipserver").value ;
       $.ajax({
-         url: 'http://192.168.0.186:5000/Load_SavePixels',
+         url: urladd + '/Load_SavePixels',
          type: 'POST',
          success: function(response){ console.log(response);
             document.getElementById("pixels").value = response.substring(1, response.length-1);
@@ -106,8 +114,9 @@
    // ================================================================
 
    function Test_NightBrightness() {
+      var urladd = 'http://' + document.getElementById("ipserver").value ;
       $.ajax({
-         url: 'http://192.168.0.186:5000/Test_NightBrightness',
+         url: urladd + '/Test_NightBrightness',
          type: 'POST'
       });
    }
@@ -122,15 +131,20 @@
       <form class="form-cursor"  role="form">
          <h2>River Hills Digital Sign Controller</h2>
          <table>
+            <tr>
+               <td><input type="checkbox" id="sign1" name="sign_1" checked>Sign 1 </td>
+               <td></td>
+               <td><input type="checkbox" id="sign2" name="sign_2" checked>Sign 2 </td>
+            </tr>
 	    <tr>
                <td>X-Y Cursor:</td>
-               <td><input type="number" id="xcursor" name="cursorx" class="form-control"  value=1 required autofocus></td>
-               <td><input type="number" id="ycursor" name="cursory" class="form-control"  value=1 required autofocus></td>
+               <td><input type="number" id="xcursor" name="cursorx" class="form-control"  value=0 required autofocus></td>
+               <td><input type="number" id="ycursor" name="cursory" class="form-control"  value=0 required autofocus></td>
             </tr>
 	    <tr>
                <td><input type="button" value="Text and Size" onclick="Set_Text()" style="font-size:x-medium"></td>
-               <td><input type="text" id="signtext" name="sign_text" value="River" class="form-control"   required autofocus></td>
-               <td><input type="number" id="textsize" name="textsize" class="form-control"  value=1 required autofocus></td>
+               <td><input type="text" id="signtext" name="sign_text" value="RIVERS" class="form-control"   required autofocus></td>
+               <td><input type="number" id="textsize" name="textsize" class="form-control"  value=5 required autofocus></td>
             </tr>
             <tr>
                <td bgcolor="red">Red</td><td>
@@ -157,7 +171,7 @@
 
             <tr>
                <td colspan="2">
-                  <textarea type="text" rows="8" cols="35" id="pixels">[10,9109504]</textarea>
+                  <textarea type="text" rows="8" cols="35" id="pixels" name="pixels">10,9109504</textarea>
                </td>
                <td><button type="button" onClick=Pixels()>Send Pixels</button></td>
             </tr>
@@ -174,7 +188,7 @@
 <td>====</td>
 <td><button type="button" onClick=Load_SavePixels()>Load Last Saved</button></td>
 </tr></table>
-<h3>Return Message from the webserver:</h3>
+<input type="text" id="ipserver" name="ip_text" value="192.168.0.44:5000">
 <div id="returnId">(Return Message) </div>
 
 </body>

@@ -18,6 +18,9 @@ class MySerial:
       self.ser.baudrate = 115200
       self.ser.timeout = 1
 
+   def setTimeout(self, timeoutsec):
+      self.ser.timeout = timeoutsec
+
    # ---------------------------
    def findPort(self):  # find Arduino serial port
       def testConnection():
@@ -88,7 +91,6 @@ class MySerial:
       else:
          print("Cannot open serial port")
 
-# mySerial = MySerial('/dev/ttyACM0')
 mySerial = MySerial()
 
 # ===================== Main Webpage ===================
@@ -274,6 +276,7 @@ def nightbrightness():
    mySerial.serOpen()
    mySerial.serWrite('{"cmd":"Test_NightBrightness"}');
    mySerial.serClose()
+   print("Test Night Brightness")
 
    return json.dumps({'Command Received':'Test_NightBrightness'})
 
@@ -283,12 +286,52 @@ def nightbrightness():
 def setpixel():
    data = getSignNumber()
    data["cmd"]    = "SetPixels"
-   data["Pixels"] = request.form['pixels']
+   pixelpts = request.form['pixels'].split(',')
+   num = []
+   colo = []
+   nn = 0
+   for x in pixelpts:
+      if nn%2:
+         colo.append(x)
+      else:
+         num.append(x)
+      nn = nn + 1
+   zip_obj = zip(num, colo)
 
-   json_obj       = json.dumps(data)
-   print(json_obj)
+   groupnumber = 300   # number of pixels sent each time
+   mySerial.setTimeout(0.1*groupnumber)
    mySerial.serOpen()
-   mySerial.serWrite( json_obj )
+
+   nn = 0
+   for loc, color in zip_obj:
+      if nn % groupnumber == 0:  # beginning of a group of array
+         jstr = "[" + loc + "," + color 
+      elif nn % groupnumber < groupnumber-1:
+         jstr = jstr + "," + loc + "," + color 
+      else:
+         data["Pixels"] = jstr + "," + loc + "," + color + "]"
+         json_obj       = json.dumps(data)
+         print(json_obj)
+         mySerial.serWrite( json_obj )
+        # if mySerial.serReadline() == b'OK':
+         if mySerial.serReadline() == b'OK\r\n':
+            print("OK")
+         else:
+            print("Fail to send pixel")
+            return "Fail to send pixel"
+      nn = nn + 1
+   if nn % groupnumber < groupnumber:
+      data["Pixels"] = jstr + "]"
+      json_obj       = json.dumps(data)
+      print(json_obj)
+      mySerial.serWrite( json_obj )
+#      print(mySerial.serReadline())
+      if mySerial.serReadline() == b'OK\r\n':
+         print("OK")
+      else:
+         print("Fail to send pixel")
+         return "Fail to send pixel"
+       
    mySerial.serClose()
    return json.dumps({'Command Received':'Set_Pixels'})
 

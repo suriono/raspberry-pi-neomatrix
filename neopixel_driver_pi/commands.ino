@@ -99,18 +99,25 @@ void Set_Text() {
 void Set_Pixels() {
   channel = Json_parse_int("Channel");
   JSONVar pp = JSON.parse(jsonObject["Pixels"]); // pair of pixel# & color
-  Serial.println(pp);
+  
   for (int nn=0; nn < pp.length()/2 ; nn++) {
-    //Serial.println(int(pp[nn*2+1]));
     if (channel & 1) {
        matrix1.setPixelColor(int(pp[nn*2]), int(pp[nn*2+1]));
-       matrix1.show();
+       //matrix1.show();
     }
     if (channel & 2) {
        matrix2.setPixelColor(int(pp[nn*2]), int(pp[nn*2+1]));
-       matrix2.show();
+       //matrix2.show();
     }
   }
+
+  if (channel & 1) {
+    matrix1.show();
+  }
+  if (channel & 2) {
+    matrix2.show();
+  }
+  SerialUSB.println("OK");
 }
 
 // ============== Get Pixels ===============
