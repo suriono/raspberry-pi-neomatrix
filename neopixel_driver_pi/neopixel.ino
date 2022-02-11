@@ -8,11 +8,13 @@ void Neopixel_Initial() {
   matrix1.setTextWrap(false); 
   matrix1.setBrightness(200);  // from 0 to 255
   matrix1.fillScreen(0); 
+  //matrix1.setFont(&FreeSerif9pt7b);
   
   matrix2.begin();
   matrix2.setTextWrap(false); 
   matrix2.setBrightness(200);  // from 0 to 255
   matrix2.fillScreen(0); 
+  //matrix2.setFont(&FreeSerif9pt7b);
 
   for (byte nn=1 ; nn<3; nn++) {
     Neopixel_SetText(nn, 2, matrix1.Color(0, 255, 0),    "OPEN",   0, 13);

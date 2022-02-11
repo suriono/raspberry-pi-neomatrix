@@ -2,6 +2,9 @@
 #include <Adafruit_NeoMatrix.h>
 #include <Adafruit_NeoPixel.h>
 #include <Arduino_JSON.h>
+#include <Fonts/FreeSerif9pt7b.h>
+#include <Fonts/FreeSerifBold9pt7b.h>
+#include <Fonts/FreeMonoBold9pt7b.h>
 
 #define PIN_NORTH_SIGN  46
 #define PIN_SOUTH_SIGN  52

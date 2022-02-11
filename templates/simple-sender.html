@@ -146,6 +146,12 @@
                <td><input type="text" id="signtext" name="sign_text" value="RIVERS" class="form-control"   required autofocus></td>
                <td><input type="number" id="textsize" name="textsize" class="form-control"  value=5 required autofocus></td>
             </tr>
+<tr>
+<td><input type="radio" name="font" value="Default" checked>Default</td>
+<td><input type="radio" name="font" value="FreeSerif9pt7b" >Free Serif</td>
+<td><input type="radio" name="font" value="FreeSerifBold9pt7b">Free Serif Bold</td>
+<td><input type="radio" name="font" value="FreeMonoBold9pt7b">Free Mono Bold</td>
+</tr>
             <tr>
                <td bgcolor="red">Red</td><td>
                <input name=red type="range" min="0" max="180" onchange="Set_Text()" id="Red1" oninput="red1OutId.value = this.value" value="100">
@@ -183,13 +189,16 @@
 <td><button type="button" onClick=Delete_All()>Delete All</button></td>
 <td>====</td>
 <td><button type="button" onClick=Undo()>Undo</button></td>
+<!---
 <td>====</td>
 <td><button type="button" onClick=SavePixels()>Save</button></td>
 <td>====</td>
 <td><button type="button" onClick=Load_SavePixels()>Load Last Saved</button></td>
-</tr></table>
+--->
+</tr>
+</table>
 <input type="text" id="ipserver" name="ip_text" value="192.168.0.44:5000">
-<div id="returnId">(Return Message) </div>
+<div id="returnId"> </div>
 
 </body>
  

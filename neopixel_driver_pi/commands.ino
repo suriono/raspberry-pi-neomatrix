@@ -83,6 +83,8 @@ void Set_Text() {
   channel = Json_parse_int("Channel");
   Set_Cursor();
   Set_TextColor();
+  Set_Font();
+  
   if (channel & 1) {
      matrix1.setTextSize(Json_parse_int("Size"));
      matrix1.print(Json_parse_str("Text"));
@@ -131,4 +133,23 @@ void Get_Pixels() {
        SerialUSB.println(pixcolor);
     }
   }
+}
+
+// ============== Set Font ==================
+void Set_Font() {
+  String font = Json_parse_str("Font");
+  if (font == "Default") {
+    matrix1.setFont();
+    matrix2.setFont();
+  } else if (font == "FreeSerif9pt7b") {
+    matrix1.setFont(&FreeSerif9pt7b);
+    matrix2.setFont(&FreeSerif9pt7b);
+  } else if (font == "FreeSerifBold9pt7b") {
+    matrix1.setFont(&FreeSerifBold9pt7b);
+    matrix2.setFont(&FreeSerifBold9pt7b);
+  } else if (font == "FreeMonoBold9pt7b") {
+    matrix1.setFont(&FreeMonoBold9pt7b);
+    matrix2.setFont(&FreeMonoBold9pt7b);
+  }
+  
 }

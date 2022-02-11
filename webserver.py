@@ -115,6 +115,7 @@ def settext():
    data["Green"] = request.form['green']
    data["Blue"]  = request.form['blue']
    data["Text"]  = request.form['sign_text']
+   data["Font"]  = request.form['font']
 
    json_obj     = json.dumps(data)
    print(json_obj)
