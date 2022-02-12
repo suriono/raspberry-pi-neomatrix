@@ -5,11 +5,11 @@ void Command_Run() {
   Serial.println();
   if (Cmd.equals("DeleteAll")) {
      Delete_All();
+  } else if (Cmd.equals("Default")) {
+     Neopixel_Default();
   } else if (Cmd.equals("TestConnection")) {
      Serial.print("test connection OK");
      SerialUSB.println("OK");
-  //} else if (Cmd.equals("SetCursor")) {
-  //   Set_Cursor(1);
   } else if (Cmd.equals("SetText")) {
      Set_Text();
   } else if (Cmd.equals("Test_NightBrightness")) {

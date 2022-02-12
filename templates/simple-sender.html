@@ -19,6 +19,18 @@
       });		
    }
 
+    // ================================================================
+
+   function Default() {
+      var urladd = 'http://' + document.getElementById("ipserver").value ;
+		
+      $.ajax({
+         url: urladd + '/Default_Display',
+         type: 'POST'
+      });		
+   }
+
+
    // ================================================================
 
    function Set_Cursor() {
@@ -189,6 +201,8 @@
 <td><button type="button" onClick=Delete_All()>Delete All</button></td>
 <td>====</td>
 <td><button type="button" onClick=Undo()>Undo</button></td>
+<td>====</td>
+<td><button type="button" onClick=Default()>Default Display</button></td>
 <!---
 <td>====</td>
 <td><button type="button" onClick=SavePixels()>Save</button></td>
@@ -198,7 +212,7 @@
 </tr>
 </table>
 <input type="text" id="ipserver" name="ip_text" value="192.168.0.44:5000">
-<div id="returnId"> </div>
+<div id="returnId"> response</div>
 
 </body>
  

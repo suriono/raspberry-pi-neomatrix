@@ -142,6 +142,23 @@ def Delete_All():
    mySerial.serClose()
    return json.dumps({'Command Received':'Delete_All'})
 
+# ====================== Default display ========================
+
+@app.route('/Default_Display', methods=['POST'])
+def Default_Display():
+   dimTimer.stop() 
+
+   print("Default display ..... ")
+   data = getSignNumber()
+
+   data["cmd"]   = "Default"
+   json_obj     = json.dumps(data)
+
+   mySerial.serOpen()
+   mySerial.serWrite( json_obj )
+   mySerial.serClose()
+   return json.dumps({'Command Received':'Default'})
+
 # ====================== Save Pixels ============================
 
 @app.route('/SavePixels', methods=['POST'])
@@ -385,14 +402,16 @@ class TimerDim():
                      self.sunrise , self.sunset = get_Calc_Dusk_Dawn()
                   except:
                      pass
-                  set_Brightness(15)
+# added in the future
+#                  set_Brightness(15)
                   self.isDim = True
                   print("     =======   Time to dim =====")
             else:
                print(", Daytime, ", end = "")
                if self.isDim:  # has not been undimmed yet
                   self.sunrise , self.sunset = get_Calc_Dusk_Dawn()
-                  set_Brightness(80)
+# added in the future
+#                  set_Brightness(80)
                   self.isDim = False
                   print("     =======   Time to NOT to dim ====")
 
