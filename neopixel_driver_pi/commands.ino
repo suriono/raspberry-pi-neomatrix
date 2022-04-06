@@ -12,13 +12,47 @@ void Command_Run() {
      SerialUSB.println("OK");
   } else if (Cmd.equals("SetText")) {
      Set_Text();
+  } else if (Cmd.equals("SetBackground")) {
+     Set_Background(2);
   } else if (Cmd.equals("Test_NightBrightness")) {
      Test_Dimmer(70);
   } else if (Cmd.equals("SetPixels")) {
      Set_Pixels();
   } else if (Cmd.equals("SavePixel")) {
      Get_Pixels();
+  //} else if (Cmd.equals("Red_Background")) {
+  //   Set_Background(1);
+  //} else if (Cmd.equals("Green_Background")) {
+  //   Set_Background(2);
+  //} else if (Cmd.equals("Blue_Background")) {
+  //   Set_Background(3);
   }
+}
+
+// ============== Background Color ===============
+void Set_Background(byte colortype) {
+  int r = Json_parse_int("Redback");
+  int g = Json_parse_int("Greenback");
+  int b = Json_parse_int("Blueback");
+  //switch ( colortype) {
+  //  case 1:
+      matrix1.fillScreen(matrix1.Color(r,g,b));
+      matrix2.fillScreen(matrix1.Color(r,g,b));
+   //   break;
+   // case 2:
+   //   matrix1.fillScreen(matrix1.Color(0,50,0));
+    //  matrix2.fillScreen(matrix1.Color(0,50,0));
+    //  break;
+   // case 3:
+   //   matrix1.fillScreen(matrix1.Color(0,0,50));
+    //  matrix2.fillScreen(matrix1.Color(0,0,50));
+    //  break;
+    //default:
+    //  Delete_All();
+    //  break;
+  //}
+  matrix1.show();
+  matrix2.show();
 }
 
 // ============== Delete All ===============

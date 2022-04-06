@@ -124,6 +124,23 @@ def settext():
    mySerial.serClose()
    return json.dumps({'Command Received':'Set_Text'})
 
+# ===================== Set Background Color ==========
+
+@app.route('/Set_Background', methods=['POST'])
+def setbackground():
+   data = getSignNumber()
+   data["cmd"]   = "SetBackground"
+   data["Redback"]   = request.form['redback']
+   data["Greenback"] = request.form['greenback']
+   data["Blueback"]  = request.form['blueback']
+
+   json_obj     = json.dumps(data)
+   print(json_obj)
+   mySerial.serOpen()
+   mySerial.serWrite( json_obj )
+   mySerial.serClose()
+   return json.dumps({'Command Received':'Set_Background'})
+
 # ====================== Delete All ============================
 
 @app.route('/Delete_All', methods=['POST'])

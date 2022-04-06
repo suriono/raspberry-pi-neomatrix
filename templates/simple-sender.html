@@ -59,6 +59,17 @@
       });
    }
 
+   // ================================================================
+
+   function Set_Background() {
+      var urladd = 'http://' + document.getElementById("ipserver").value ;
+      $.ajax({
+         url: urladd + '/Set_Background',
+         type: 'POST',
+         data: $('form').serialize()
+      });
+   }
+
 
    // ================================================================
 
@@ -165,19 +176,19 @@
 <td><input type="radio" name="font" value="FreeMonoBold9pt7b">Free Mono Bold</td>
 </tr>
             <tr>
-               <td bgcolor="red">Red</td><td>
+               <td bgcolor="red">Red Text</td><td>
                <input name=red type="range" min="0" max="180" onchange="Set_Text()" id="Red1" oninput="red1OutId.value = this.value" value="100">
                <output id="red1OutId">100</output></td>
-               <td rowspan="3"><input type="button" value="Test Night Brightness (3 sec dim)" onclick="Test_NightBrightness()" style="font-size:x-medium"></td> 
+<!--               <td rowspan="3"><input type="button" value="Test Night Brightness (3 sec dim)" onclick="Test_NightBrightness()" style="font-size:x-medium"></td> -->
             </tr>
 
             <tr>
-               <td bgcolor="green">Green</td>
+               <td bgcolor="green">Green Text</td>
                <td><input name="green" type="range" min="0" max="180" onchange="Set_Text()" id="Green1" oninput="green1OutId.value = this.value" value="0">
                    <output id="green1OutId">0</output></td>
             </tr>
             <tr>
-               <td bgcolor="Blue">Blue</td>
+               <td bgcolor="Blue">Blue Text</td>
                <td><input name="blue" type="range" min="0" max="180" onchange="Set_Text()" id="Blue1" oninput="blue1OutId.value = this.value" value="0">
 <output id="blue1OutId">0</output></td>
             </tr>
@@ -192,6 +203,23 @@
                   <textarea type="text" rows="8" cols="35" id="pixels" name="pixels">10,9109504</textarea>
                </td>
                <td><button type="button" onClick=Pixels()>Send Pixels</button></td>
+            </tr>
+
+            <tr>
+               <td bgcolor="red">Red Background</td><td>
+               <input name=redback type="range" min="0" max="50" onchange="Set_Background()" id="Redback1" oninput="redback1OutId.value = this.value" value="0">
+               <output id="redback1OutId">0</output></td>
+            </tr>
+
+            <tr>
+               <td bgcolor="green">Green Background</td>
+               <td><input name="greenback" type="range" min="0" max="50" onchange="Set_Background()" id="Greenback1" oninput="greenback1OutId.value = this.value" value="0">
+                   <output id="greenback1OutId">0</output></td>
+            </tr>
+            <tr>
+               <td bgcolor="Blue">Blue Background</td>
+               <td><input name="blueback" type="range" min="0" max="50" onchange="Set_Background()" id="Blueback1" oninput="blueback1OutId.value = this.value" value="0">
+<output id="blueback1OutId">0</output></td>
             </tr>
          </table>
       </form>   
@@ -211,7 +239,7 @@
 --->
 </tr>
 </table>
-<input type="text" id="ipserver" name="ip_text" value="192.168.0.44:5000">
+<input type="text" id="ipserver" name="ip_text" value="192.168.10.226:5000">
 <div id="returnId"> response</div>
 
 </body>
