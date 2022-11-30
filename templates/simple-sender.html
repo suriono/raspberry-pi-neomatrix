@@ -33,30 +33,18 @@
 
    // ================================================================
 
-   function Set_Cursor() {
-      var urladd = 'http://' + document.getElementById("ipserver").value ;
-      $.ajax({
-         url: urladd + '/Set_Cursor',
-	 type: 'POST',
-         data: $('form').serialize(),
-         success: function(response){ console.log(response);
-            document.getElementById("returnId").innerHTML = response;
-         },
-         error: function(error){ console.log(error);
-            document.getElementById("returnId").innerHTML = error;
-         }
-      });
-   }
-
-   // ================================================================
-
    function Set_Text() {
+      var pixel_orig = document.getElementById("pixels").innerHTML; // copy
+      document.getElementById("pixels").innerHTML = "0.0";
+
       var urladd = 'http://' + document.getElementById("ipserver").value ;
       $.ajax({
          url: urladd + '/Set_Text',
          type: 'POST',
          data: $('form').serialize()
       });
+      document.getElementById("sentCmd").innerHTML = unescape($('form').serialize());
+      document.getElementById("pixels").innerHTML = pixel_orig; // restore
    }
 
    // ================================================================
@@ -108,6 +96,8 @@
          type: 'POST',
          data: $('form').serialize()
       });
+      document.getElementById("sentCmd").innerHTML = unescape($('form').serialize());
+
    }
 
    // ================================================================
@@ -129,7 +119,6 @@
          type: 'POST',
          success: function(response){ console.log(response);
             document.getElementById("pixels").value = response.substring(1, response.length-1);
-//            document.getElementById("returnId").innerHTML = response;
          }
       });
    }
@@ -167,7 +156,7 @@
 	    <tr>
                <td><input type="button" value="Text and Size" onclick="Set_Text()" style="font-size:x-medium"></td>
                <td><input type="text" id="signtext" name="sign_text" value="RIVERS" class="form-control"   required autofocus></td>
-               <td><input type="number" id="textsize" name="textsize" class="form-control"  value=5 required autofocus></td>
+               <td><input type="number" id="textsize" name="textsize" class="form-control"  value=1 required autofocus></td>
             </tr>
 <tr>
 <td><input type="radio" name="font" value="Default" checked>Default</td>
@@ -207,18 +196,18 @@
 
             <tr>
                <td bgcolor="red">Red Background</td><td>
-               <input name=redback type="range" min="0" max="50" onchange="Set_Background()" id="Redback1" oninput="redback1OutId.value = this.value" value="0">
+               <input name=redback type="range" min="0" max="150" onchange="Set_Background()" id="Redback1" oninput="redback1OutId.value = this.value" value="0">
                <output id="redback1OutId">0</output></td>
             </tr>
 
             <tr>
                <td bgcolor="green">Green Background</td>
-               <td><input name="greenback" type="range" min="0" max="50" onchange="Set_Background()" id="Greenback1" oninput="greenback1OutId.value = this.value" value="0">
+               <td><input name="greenback" type="range" min="0" max="150" onchange="Set_Background()" id="Greenback1" oninput="greenback1OutId.value = this.value" value="0">
                    <output id="greenback1OutId">0</output></td>
             </tr>
             <tr>
                <td bgcolor="Blue">Blue Background</td>
-               <td><input name="blueback" type="range" min="0" max="50" onchange="Set_Background()" id="Blueback1" oninput="blueback1OutId.value = this.value" value="0">
+               <td><input name="blueback" type="range" min="0" max="150" onchange="Set_Background()" id="Blueback1" oninput="blueback1OutId.value = this.value" value="0">
 <output id="blueback1OutId">0</output></td>
             </tr>
          </table>
@@ -240,7 +229,8 @@
 </tr>
 </table>
 <input type="text" id="ipserver" name="ip_text" value="192.168.10.226:5000">
-<div id="returnId"> response</div>
+<br>Output command to the sign<br>
+<textarea type="text" rows="12" cols="60" id="sentCmd"></textarea>
 
 </body>
  
