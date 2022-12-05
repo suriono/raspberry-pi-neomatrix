@@ -1,5 +1,13 @@
+{"Cmd": "Delete_All", "Delay": 5}
+
 {"Cmd": "Set_Pixels", "Delay": 1}
 sign_1=on&sign_2=on&pixels=7,20000
 
+{"Cmd": "Set_Pixels", "Delay": 1}
+sign_1=on&sign_2=on&pixels=7,0
+
 {"Cmd": "Set_Text", "Delay": 1}
 sign_1=on&sign_2=on&cursorx=0&cursory=12&sign_text=T&textsize=1&font=FreeSerif9pt7b&red=0&green=200&blue=0&pixels=12,20000&redback=0&greenback=0&blueback=0
+
+{"Cmd": "Set_Text", "Delay": 1}
+sign_1=on&sign_2=on&cursorx=0&cursory=12&sign_text=T&textsize=1&font=FreeSerif9pt7b&red=0&green=0&blue=0&redback=0&greenback=0&blueback=0
